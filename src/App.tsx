@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { fetchTrivia, Difficulty, QuestionState } from './API';
 import QuestionCard from './compoments/QuestionCard';
 
-const TOTAL_QUESTIONS = 10;
+const TOTAL_QUESTIONS = 2;
 
 //Create a type for the answer
-type AnswerObj = {
+//will be important in QuestionCard.tsx
+export type AnswerObj = {
 	question: string;
 	answer: string; //user answer
 	correct: boolean; //tell if user answered correctly
@@ -22,10 +23,15 @@ function App () {
 	const [ gameOver, setGameOver ] = useState(true);
 
 	// console.log(fetchTrivia(TOTAL_QUESTIONS, Difficulty.EASY));
-	console.log(questions);
+	// console.log(questions);
 
 	const startTrivia = async () => {
 		try {
+			//reset
+			setUserAnswers([]);
+			setScore(0);
+			setNumber(0);
+
 			//fetch trivia
 			setLoading(true);
 			setGameOver(false);
@@ -33,9 +39,6 @@ function App () {
 
 			//set questions with newQuestions
 			setQuestions(newQuestions);
-			setScore(0);
-			setUserAnswers([]);
-			setNumber(0);
 			setLoading(false);
 		} catch (error) {
 			//error handling
@@ -43,22 +46,53 @@ function App () {
 		}
 	};
 
-	const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {};
+	//cehckAnswer when user click on answer
+	const checkAnswer = (e: any) => {
+		// console.log(e.target.value);
+		if (!gameOver) {
+			const answer = e.target.value;
+			//check answer, returns true or false
+			const correct = answer === questions[number].correct_answer;
+			if (correct) {
+				setScore(prev => prev + 1);
+			}
 
-	const nextQuestion = () => {};
+			// create an answerObj and save answer to answers
+			const answerObj = {
+				question: questions[number].question,
+				answer,
+				correct,
+				correctAnswer: questions[number].correct_answer
+			};
+			setUserAnswers(prev => [ ...prev, answerObj ]);
+		}
+	};
+
+	//Display next questions if not the last one
+	const nextQuestion = () => {
+		const nextQuestion = number + 1;
+		//check if it is the last one
+		if (nextQuestion !== TOTAL_QUESTIONS) {
+			setNumber(nextQuestion);
+		} else {
+			setGameOver(true);
+		}
+	};
 
 	return (
 		<div className='App'>
 			<h1>Trivia Time</h1>
+			{!gameOver && <p className='score'>Score: {score}</p>}
+			{userAnswers.length === TOTAL_QUESTIONS && <p>Game Over. Press Start button to play again</p>}
 			{(gameOver || userAnswers.length === TOTAL_QUESTIONS) && (
 				<button className='start' onClick={startTrivia}>
 					Start
 				</button>
 			)}
-			{!gameOver && <p className='score'>Score: {score}</p>}
 			{loading && <p>Loading Trivias ... </p>}
 			{!loading &&
 			!gameOver &&
+			userAnswers.length !== TOTAL_QUESTIONS &&
 			questions.length > 0 && (
 				<QuestionCard
 					questionNumber={number + 1}

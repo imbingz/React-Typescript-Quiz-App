@@ -1,11 +1,15 @@
 import React from 'react';
 
+//types
+import { AnswerObj } from '../App';
+
 //create type for props (can be any name)
+//https://stackoverflow.com/questions/54433183/typescript-interface-signature-for-the-onclick-event-in-reactjs
 type Props = {
 	question: string;
 	answers: string[];
-	callback: any;
-	userAnswer: any;
+	callback: (e: React.MouseEvent<HTMLButtonElement>) => void; // void does not care about return
+	userAnswer: AnswerObj | undefined;
 	questionNumber: number;
 	totalQuestions: number;
 };
@@ -23,7 +27,7 @@ const QuestionCard: React.FC<Props> = ({ question, answers, callback, userAnswer
 			{answers.map((answer, i) => (
 				<div key={i}>
 					<button
-						disabled={userAnswer}
+						disabled={userAnswer ? true : false} // or !!userAnswer
 						onClick={callback}
 						dangerouslySetInnerHTML={{ __html: answer }}
 						value={answer}

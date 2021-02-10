@@ -35,9 +35,9 @@ export const Wrapper = styled.div`
 	}
 
 	.score {
-		color: #fff;
-		font-size: 2rem;
-		margin: 0;
+		color: orange;
+		font-size: 1.3rem;
+		margin-bottom: 10px;
 	}
 
 	h1 {

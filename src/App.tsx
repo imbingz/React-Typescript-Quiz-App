@@ -3,7 +3,7 @@ import { fetchTrivia, Difficulty, QuestionState } from './API';
 import QuestionCard from './compoments/QuestionCard';
 import { GlobalStyle, Wrapper } from './App.style';
 
-const TOTAL_QUESTIONS = 2;
+const TOTAL_QUESTIONS = 12;
 
 //Create a type for the answer
 //will be important in QuestionCard.tsx

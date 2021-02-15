@@ -33,8 +33,8 @@
   ## Project Objective
     * Use Reactjs and TypeScript to build a quiz app. 
     * The app is mobile-reponsive 
-    * User can set the number of questions and the difficult levels (easy, mediu, hard)
-    * User will be notified whether he/she has chosen the correct answer, if not, the corret answer will be highlighted. 
+    * User can set the number of questions and the difficult levels (easy, medium, hard)
+    * User will be notified whether he/she has chosen the correct answer, if not, the correct answer will be highlighted. 
     * There is also a score to track the performance (1 point for each correct answer. No penalties for incorrect answers.)
 
   ## User Story

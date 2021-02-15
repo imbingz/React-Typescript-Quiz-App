@@ -42,7 +42,7 @@
 
   ## Technologies 
   ```
-  Reactjs, Typscript, Styled Components
+  Reactjs, Typscript, Styled Components, AWS Amplify
   ```
   
   ## Installation
